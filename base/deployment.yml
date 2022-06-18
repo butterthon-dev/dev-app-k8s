@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-app
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: dev-app
+    spec:
+      serviceAccountName: overlaysごとに書き換える
+      imagePullSecrets:
+        # - name: overlaysごとに書き換える
+      containers:
+        - name: dev-app-pod
+          image: asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:latest
+          imagePullPolicy: Always
+          env:
+            - name: DEBUG
+              valueFrom:
+                secretKeyRef:
+                  name: overlaysごとに書き換える
+                  key: DEBUG # ExternalSecretのdata.secretKey
+
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: overlaysごとに書き換える
+                  key: DATABASE_URL # ExternalSecretのdata.secretKey
+
+            - name: DJANGO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: overlaysごとに書き換える
+                  key: DJANGO_SECRET_KEY # ExternalSecretのdata.secretKey
+
+            - name: DJANGO_ALLOWED_HOSTS
+              valueFrom:
+                secretKeyRef:
+                  name: overlaysごとに書き換える
+                  key: DJANGO_ALLOWED_HOSTS # ExternalSecretのdata.secretKey
+
+            - name: DJANGO_SETTINGS_MODULE
+              valueFrom:
+                secretKeyRef:
+                  name: overlaysごとに書き換える
+                  key: DJANGO_SETTINGS_MODULE # ExternalSecretのdata.secretKey
+
+          ports:
+            - containerPort: 8000
+
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
+          command:
+            - overlaysごとに書き換える
+          securityContext:
+            runAsNonRoot: true

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-app
+spec:
+  template:
+    spec:
+      serviceAccountName: gke-sa-dev-app # Terraformで作成したGKEアカウント
+      imagePullSecrets:
+        - name: staging-artifact-registry # docker-registryのシークレット名
+      containers:
+        - name: dev-app-pod
+          env:
+            - name: DEBUG
+              valueFrom:
+                secretKeyRef:
+                  name: stg-secrets # ExternalSecretのtarget.name
+
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: stg-secrets # ExternalSecretのtarget.name
+
+            - name: DJANGO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stg-secrets # ExternalSecretのtarget.name
+
+            - name: DJANGO_ALLOWED_HOSTS
+              valueFrom:
+                secretKeyRef:
+                  name: stg-secrets # ExternalSecretのtarget.name
+
+            - name: DJANGO_SETTINGS_MODULE
+              valueFrom:
+                secretKeyRef:
+                  name: stg-secrets # ExternalSecretのtarget.name
+
+        - name: cloud-sql-proxy
+          command:
+            - "/cloud_sql_proxy"
+            - "-log_debug_stdout"
+            - "-instances=cloud-learn-dev:asia-northeast1:db-instance-dev-app=tcp:0.0.0.0:3306" # -instances={ CloudSQLの接続名 }=tcp:0.0.0.0:3306
+            - "-term_timeout=30s"

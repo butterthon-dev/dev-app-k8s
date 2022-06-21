@@ -42,46 +42,9 @@ helm repo add external-secrets https://charts.external-secrets.io
 helm install external-secrets external-secrets/external-secrets
 ```
 
-### 8. SecretStoreのsecretAccessKeySecretRef書き換え
-k8s構成をコンソール出力
+### 8. ExternalSecretがGCP SecretManagerと通信できるようシークレットを作成
 ``` shell
-kubectl kustomize ./overlays/staging
-```
-
-Secretのmetadata.nameを
-``` shell
-apiVersion: v1
-data:
-  secret-access-credentials: |
-    ...省略...
-kind: Secret
-metadata:
-  labels:
-    stg: dev-app
-  name: stg-gcpsm-secret-001-t5kgh26gcf # コレ
-type: Opaque
-...
-..
-.
-```
-
-external-secret.yml内SecretStoreのsecretAccessKeySecretRefに指定
-``` dev-app-k8s/overlays/staging/patches/external-secret.yml
-apiVersion: external-secrets.io/v1beta1
-kind: SecretStore
-metadata:
-  name: secretstore
-spec:
-  provider:
-    gcpsm:
-      projectID: cloud-learn-dev
-      auth:
-        secretRef:
-          secretAccessKeySecretRef:
-            name: stg-gcpsm-secret-001-t5kgh26gcf # ココ
-...
-..
-.
+kubectl create secret generic stg-gcpsm-secret-001 --from-file=secret-access-credentials=./service_account.json
 ```
 
 ### 9. apply

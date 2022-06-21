@@ -13,8 +13,3 @@ commonLabels:
 patches:
   - ./patches/deployment.yml
   - ./patches/external-secret.yml
-
-secretGenerator:
-  - name: gcpsm-secret
-    files:
-      - secret-access-credentials=./service_account.json

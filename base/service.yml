@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: dev-app
 spec: 
-  type: LoadBalancer
+  type: NodePort
   ports:
     - port: 80 # サービスのポート（80にすると http://external-ip でアクセスできる、8000とかにした場合はhttp://external-ip:8000）
       targetPort: 8000 # Podの内部IPアドレス（gnicornで0.0.0.0:8000としているので8000）
       protocol: TCP # 通信に使うプロトコル
-      nodePort: 30001 # ワーカーノードのポート（範囲内の値であればなんでも良い）
+      nodePort: 30000 # ワーカーノードのポート（範囲内の値であればなんでも良い）

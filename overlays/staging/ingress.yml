@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-hello-api
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: static-ip-dev-app
+    networking.gke.io/managed-certificates: stg-managed-cert-001
+    kubernetes.io/ingress.class: "gce"
+spec:
+  defaultBackend:
+    service:
+      name: stg-dev-app-001
+      port:
+        number: 80

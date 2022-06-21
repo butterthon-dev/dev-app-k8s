@@ -1,6 +1,10 @@
 bases:
   - ../../base
 
+resources:
+  - ./managed-cert.yml
+  - ./ingress.yml
+
 namePrefix: "stg-"
 nameSuffix: "-001"
 commonLabels:

@@ -31,7 +31,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: stg-secrets # ExternalSecretのtarget.name
-          image: asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:2055ddabef74d9e9344932357c3926dce7cb9526
+          image: asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:33234f1def97cc74ed5669bfe66188f6058f72f5
         - name: cloud-sql-proxy
           command:
             - "/cloud_sql_proxy"

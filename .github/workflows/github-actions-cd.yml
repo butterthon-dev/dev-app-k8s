@@ -21,7 +21,7 @@ jobs:
         if: ${{ env.GITHUB_REF }} == 'master'
         uses: mikefarah/yq@master
         with:
-          cmd: IMAGE_TAG=' asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:${{ env.GITHUB_SHA }}' yq eval '.spec.template.spec.containers[].image = env(IMAGE_TAG)' -i ${{ env.WORK_DIR }}/overlays/staging/patches/development.yml
+          cmd: IMAGE_TAG=' asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:${{ env.GITHUB_SHA }}' yq eval '.spec.template.spec.containers[].image = env(IMAGE_TAG)' -i overlays/staging/patches/deployment.yml
 
       - name: commit & push
         env:

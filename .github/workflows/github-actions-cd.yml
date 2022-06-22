@@ -28,8 +28,6 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: |
-            [${{ env.GITHUB_SHA }}] Update Container Image
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
@@ -48,3 +46,8 @@ jobs:
             ${{ env.GITHUB_SHA }} release
           assignees: butterthon
           draft: false
+
+      - name: Merge pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge ${{ steps.omr.outputs.pull-request-url }} --merge

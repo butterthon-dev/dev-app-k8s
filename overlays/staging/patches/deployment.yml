@@ -32,10 +32,10 @@ spec:
                 secretKeyRef:
                   name: stg-secrets # ExternalSecretのtarget.name
           image: asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:e0d276531fa33006e46243474d913b6436e8951f
+
         - name: cloud-sql-proxy
           command:
             - "/cloud_sql_proxy"
             - "-log_debug_stdout"
             - "-instances=cloud-learn-dev:asia-northeast1:db-instance-dev-app-2=tcp:0.0.0.0:3306" # -instances={ CloudSQLの接続名 }=tcp:0.0.0.0:3306
             - "-term_timeout=30s"
-          image: asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:e0d276531fa33006e46243474d913b6436e8951f

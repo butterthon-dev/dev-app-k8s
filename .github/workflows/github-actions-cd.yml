@@ -21,7 +21,7 @@ jobs:
         if: ${{ env.GITHUB_REF }} == 'master'
         uses: mikefarah/yq@master
         with:
-          cmd: IMAGE_TAG=' asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:${{ env.GITHUB_SHA }}' yq eval '.spec.template.spec.containers[].image = env(IMAGE_TAG)' -i overlays/staging/patches/deployment.yml
+          cmd: IMAGE_TAG=' asia-northeast1-docker.pkg.dev/cloud-learn-dev/dev-app-img-repository/sample-image:${{ env.GITHUB_SHA }}' yq eval '.spec.template.spec.containers[0].image = env(IMAGE_TAG)' -i overlays/staging/patches/deployment.yml
 
       - name: Open merge request
         id: omr

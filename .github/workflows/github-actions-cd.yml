@@ -50,4 +50,4 @@ jobs:
       - name: Open merge request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr merge ${{ steps.omr.outputs.pull-request-url }} --merge
+        run: gh pr create ${{ steps.omr.outputs.pull-request-url }} --merge

@@ -46,8 +46,3 @@ jobs:
             ${{ env.GITHUB_SHA }} release
           assignees: butterthon
           draft: false
-
-      - name: Merge pr
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr merge ${{ steps.omr.outputs.pull-request-url }} --merge
